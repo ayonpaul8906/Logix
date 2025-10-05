@@ -2,14 +2,14 @@ import React from 'react';
 import Calculator from './components/Calculator';
 import { FiCode } from 'react-icons/fi'; 
 
-// --- Components ---
-
 const Navbar = () => (
     <header className="w-full bg-secondary-dark/80 backdrop-blur-sm shadow-lg border-b border-glass-border fixed top-0 z-20">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* FIX: Using 'px-4' for standard left/right padding across most screen sizes. */}
+        <div className="max-w-6xl mx-10 py-4 flex justify-between items-center">
             <div className="text-3xl font-bold text-accent-blue flex items-center tracking-wider">
-                <FiCode className="w-8 h-8 mr-2 text-accent-green" />
-                Logix
+                {/* <FiCode className="w-8 h-8 mr-2 text-accent-green" /> */}
+                <img src="/logo.png" alt="" className='w-10 h-10 mr-3'/>
+                Logix 
             </div>
         </div>
     </header>
@@ -18,7 +18,7 @@ const Navbar = () => (
 const Footer = () => (
     <footer className="w-full bg-secondary-dark/80 backdrop-blur-sm border-t border-glass-border mt-10 p-4 fixed bottom-0 z-20">
         <div className="max-w-6xl mx-auto text-center text-gray-500 text-sm font-light">
-            &copy; {new Date().getFullYear()} Logix Calculator. Built with React, Vite & Tailwind CSS.
+            &copy; {new Date().getFullYear()} Logix Calculator.
         </div>
     </footer>
 );
