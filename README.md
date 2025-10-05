@@ -50,7 +50,7 @@ logix/
 
 | **Basic Mode** | **Scientific Mode** | **Graph Mode** |
 |:------------:|:------------:|:------------:|
-| ![Basic Mode](https://github.com/user-attachments/assets/be717f7c-e843-4594-abde-058b3edb3f72) | ![Scientific Mode](https://github.com/user-attachments/assets/434932c8-9ffc-447f-aad5-4ae78a1662db) | ![Graph Mode](https://github.com/user-attachments/assets/12f777bc-6d95-42e2-8a9b-e02a94b3f11a) |
+| ![Basic Mode](https://github.com/user-attachments/assets/be717f7c-e843-4594-abde-058b3edb3f72) | ![Scientific Mode](https://github.com/user-attachments/assets/434932c8-9ffc-447f-aad5-4ae78a1662db) | ![Graph Mode](https://github.com/user-attachments/assets/802867cd-a52b-4519-9e94-8ec28068c927) |
 
 ---
 
