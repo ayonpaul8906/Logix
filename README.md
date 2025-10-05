@@ -1,16 +1,106 @@
-# React + Vite
+# <img width="35" height="35" alt="image" src="https://github.com/user-attachments/assets/06e1cc6c-d040-41b0-a7c9-fe82cb27380a" /> Logix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Logix is an **advanced calculator web application** designed to go beyond simple arithmetic.  
+It combines **Basic Mode**, **Scientific Mode**, **History Tracking**, and **Graph Visualization** into one sleek and modern platform.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Built with **React (Vite) + TailwindCSS**, Logix is fully responsive, fast, and feature-packed with smooth animations.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌟 Features
 
-## Expanding the ESLint configuration
+- 🔢 **Basic Mode** – Perform quick and simple arithmetic operations.  
+- 🧑‍🔬 **Scientific Mode** – Access advanced mathematical functions like trigonometry, logarithms, powers, and more.  
+- 📜 **History Panel** – Keep track of past calculations with a clean, scrollable history log.  
+- 📈 **Graph Visualization** – Plot equations dynamically (e.g., `y = x^2`, `y = sin(x)`) with interactive, animated graphs.  
+- 🎨 **Modern UI** – Glassmorphism design, gradients, hover effects, and responsive layouts.  
+- ⌨️ **Keyboard Support** – Type equations directly with your keyboard for faster input.  
+- 🌙 **Theme Ready** – Future support for Light/Dark/Neon themes.  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [React](https://react.dev/) (with [Vite](https://vitejs.dev/))  
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)  
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)  
+- **Graphing**: [Chart.js](https://www.chartjs.org/)  
+
+---
+
+## 📂 Project Structure
+```plaintext
+logix/
+│── src/
+│   ├── components/    # Reusable UI components 
+│   ├── libs/          # Helper libraries / utils
+│   ├── App.jsx        # Root component
+│   └── main.jsx       # Entry point
+│
+│── public/            # Static files
+│── package.json       # Dependencies & scripts
+│── tailwind.config.js # TailwindCSS config
+└── vite.config.js     # Vite config
+
+```
+---
+
+## 📸 Screenshots  
+
+| **Basic Mode** | **Scientific Mode** | **Graph Mode** |
+|:------------:|:------------:|:------------:|
+| ![Basic Mode](https://github.com/user-attachments/assets/2a06b060-c453-435b-8f04-ce47236c39a2) | ![Scientific Mode](https://github.com/user-attachments/assets/c9dade76-8399-4a02-9fff-4275d06124eb) | ![Graph Mode](https://github.com/user-attachments/assets/12f777bc-6d95-42e2-8a9b-e02a94b3f11a) |
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to run Logix locally:
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/your-username/logix.git
+cd logix
+```
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
+### 3️⃣ Start Development Server
+```bash
+npm run dev
+```
+Your project will be running at: http://localhost:5173/
+
+---
+
+## 🎯 Future Improvements
+
+ - Add Light/Dark/Neon themes
+ - Export graphs as PNG/JPEG
+ - Mobile-first enhancements with larger buttons
+
+---
+
+## 🤝 Contributing
+1. Contributions are always welcome!
+2. Fork the repo
+3. Create a new branch (git checkout -b feature/YourFeature)
+4. Commit your changes (git commit -m "Add YourFeature")
+5. Push to branch (git push origin feature/YourFeature)
+6. Open a Pull Request
+
+---
+
+## 🙌 Acknowledgements
+Special thanks to **SkillCraft Technology** for providing the opportunity to work on this project as part of the **Web Development Internship Program**.  
+
+---
+
+## 📬 Contact
+👤 **Ayon Paul**  
+
+🔗 [LinkedIn](https://www.linkedin.com/in/ayon2407s/)  
+🔗 [GitHub](https://github.com/ayon8906)  
+
