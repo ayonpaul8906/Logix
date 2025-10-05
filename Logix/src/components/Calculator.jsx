@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCalculator } from '../lib/useCalculator';
-import { FiMinimize2, FiMaximize2, FiDelete, FiBookOpen } from 'react-icons/fi';
+import { FiMinimize2, FiMaximize2, FiDelete, FiBookOpen, FiActivity, FiSettings } from 'react-icons/fi';
+import GraphMode from './GraphMode';
 
 // --- Button Configurations ---
-
 const buttonBaseStyle = 'p-3 rounded-xl text-xl font-semibold backdrop-blur-sm hover:bg-glass-bg/50 transition-all duration-150 shadow-inner-shadow border border-glass-border/50 flex items-center justify-center';
 
 const basicButtons = [
@@ -34,45 +34,100 @@ const basicButtons = [
 ];
 
 const scientificButtons = [
-  // Using a slightly more compact grid layout for scientific mode on smaller screens
-  // This is the core fix for the layout issue.
-  { label: '(', style: 'text-accent-green/80' },
-  { label: ')', style: 'text-accent-green/80' },
-  { label: 'C', style: 'text-accent-red bg-secondary-dark/70' },
-  { label: 'DEL', style: 'text-accent-red bg-secondary-dark/70', icon: FiDelete },
-  
-  { label: 'sin(', style: 'text-accent-blue/90 text-sm' },
-  { label: 'cos(', style: 'text-accent-blue/90 text-sm' },
-  { label: 'tan(', style: 'text-accent-blue/90 text-sm' },
-  { label: '/', style: 'text-accent-green bg-glass-bg' },
-  
-  { label: 'log(', style: 'text-accent-blue/90 text-sm' },
-  { label: 'ln(', style: 'text-accent-blue/90' },
-  { label: 'sqrt(', style: 'text-accent-blue/90 text-sm' },
-  { label: '*', style: 'text-accent-green bg-glass-bg' },
-  
-  { label: 'π', style: 'text-accent-blue/90' },
-  { label: '^', style: 'text-accent-blue/90' },
-  { label: '%', style: 'text-accent-green bg-glass-bg' },
-  { label: '-', style: 'text-accent-green bg-glass-bg' },
-  
-  { label: '7', style: 'text-white bg-secondary-dark' },
-  { label: '8', style: 'text-white bg-secondary-dark' },
-  { label: '9', style: 'text-white bg-secondary-dark' },
-  { label: '+', style: 'text-accent-green bg-glass-bg' },
-  
-  { label: '4', style: 'text-white bg-secondary-dark' },
-  { label: '5', 'style': 'text-white bg-secondary-dark' },
-  { label: '6', 'style': 'text-white bg-secondary-dark' },
-  { label: '0', 'style': 'text-white bg-secondary-dark' },
-  
-  { label: '1', 'style': 'text-white bg-secondary-dark' },
-  { label: '2', 'style': 'text-white bg-secondary-dark' },
-  { label: '3', 'style': 'text-white bg-secondary-dark' },
-  { label: '.', 'style': 'text-white bg-secondary-dark' },
-  
-  { label: '=', style: 'bg-accent-blue/80 text-white shadow-soft-glow hover:bg-accent-blue col-span-4 py-4' }, 
+    // ... (scientificButtons array remains the same)
+    { label: '(', style: 'text-accent-green/80' },
+    { label: ')', style: 'text-accent-green/80' },
+    { label: 'C', style: 'text-accent-red bg-secondary-dark/70' },
+    { label: 'DEL', style: 'text-accent-red bg-secondary-dark/70', icon: FiDelete },
+    
+    { label: 'sin(', style: 'text-accent-blue/90 text-sm' },
+    { label: 'cos(', style: 'text-accent-blue/90 text-sm' },
+    { label: 'tan(', style: 'text-accent-blue/90 text-sm' },
+    { label: '/', style: 'text-accent-green bg-glass-bg' },
+    
+    { label: 'log(', style: 'text-accent-blue/90 text-sm' },
+    { label: 'ln(', style: 'text-accent-blue/90' },
+    { label: 'sqrt(', style: 'text-accent-blue/90 text-sm' },
+    { label: '*', style: 'text-accent-green bg-glass-bg' },
+    
+    { label: 'π', style: 'text-accent-blue/90' },
+    { label: '^', style: 'text-accent-blue/90' },
+    { label: '%', style: 'text-accent-green bg-glass-bg' },
+    { label: '-', style: 'text-accent-green bg-glass-bg' },
+    
+    { label: '7', style: 'text-white bg-secondary-dark' },
+    { label: '8', style: 'text-white bg-secondary-dark' },
+    { label: '9', style: 'text-white bg-secondary-dark' },
+    { label: '+', style: 'text-accent-green bg-glass-bg' },
+    
+    { label: '4', style: 'text-white bg-secondary-dark' },
+    { label: '5', 'style': 'text-white bg-secondary-dark' },
+    { label: '6', 'style': 'text-white bg-secondary-dark' },
+    { label: '0', 'style': 'text-white bg-secondary-dark' },
+    
+    { label: '1', 'style': 'text-white bg-secondary-dark' },
+    { label: '2', 'style': 'text-white bg-secondary-dark' },
+    { label: '3', 'style': 'text-white bg-secondary-dark' },
+    { label: '.', 'style': 'text-white bg-secondary-dark' },
+    
+    { label: '=', style: 'bg-accent-blue/80 text-white shadow-soft-glow hover:bg-accent-blue col-span-4 py-4' }, 
 ];
+
+const ModeSwitcher = ({ currentMode, onModeChange }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const modes = [
+        { id: 'BASIC', name: 'Basic', icon: <FiMinimize2 className="w-4 h-4" /> },
+        { id: 'SCIENTIFIC', name: 'Scientific', icon: <FiMaximize2 className="w-4 h-4" /> },
+        { id: 'GRAPH', name: 'Graph', icon: <FiActivity className="w-4 h-4" /> }
+    ];
+
+    return (
+        <div className="relative w-full mb-4">
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full p-2 rounded-xl bg-zinc-900 text-sm font-medium text-accent-blue 
+                         hover:bg-glass-bg transition-all duration-300 border border-glass-border 
+                         hover:cursor-pointer
+                         flex items-center justify-between"
+            >
+                <span className="flex items-center gap-2">
+                    {modes.find(m => m.id === currentMode)?.icon}
+                    {modes.find(m => m.id === currentMode)?.name} Mode
+                </span>
+                <span className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>
+                    ▼
+                </span>
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full left-0 right-0 mt-1 bg-zinc-700 border border-glass-border rounded-xl overflow-hidden z-50"
+                    >
+                        {modes.map((mode) => (
+                            <button
+                                key={mode.id}
+                                onClick={() => {
+                                    onModeChange(mode.id);
+                                    setIsOpen(false);
+                                }}
+                                className={`w-full p-3 flex items-center gap-2 hover:bg-glass-bg/50 transition-colors
+                                          ${currentMode === mode.id ? 'bg-glass-bg text-accent-blue' : 'text-white'}`}
+                            >
+                                {mode.icon}
+                                {mode.name}
+                            </button>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
 
 const CalculatorButton = ({ label, onClick, className, Icon }) => (
   <motion.button
@@ -103,7 +158,6 @@ const TypingEffectDisplay = ({ text, isError }) => {
 };
 
 const HistoryPanel = ({ history, clearHistory }) => (
-    // FIX: Changed w-48 to w-60 on large screens for better visibility.
     <div className='w-full max-h-40 overflow-y-auto p-3 
                     rounded-xl bg-glass-bg backdrop-blur-sm border border-glass-border 
                     shadow-soft-glow text-xs text-gray-300 mb-4 
@@ -138,130 +192,110 @@ const HistoryPanel = ({ history, clearHistory }) => (
     </div>
 );
 
-
-// --- Main Calculator Component ---
-
 const Calculator = () => {
-  const { 
-    input, 
-    history,
-    error,
-    isError,
-    handleInput, 
-    handleEqual, 
-    handleKeyDown,
-    clearHistory
-  } = useCalculator();
-  
-  const [isScientificMode, setIsScientificMode] = useState(false); // Start in basic mode for better mobile-first view
-  const currentButtons = isScientificMode ? scientificButtons : basicButtons;
-  const currentGridCols = 'grid-cols-4'; 
+    const [mode, setMode] = useState('BASIC');
+    const { 
+        input, 
+        history,
+        error,
+        isError,
+        handleInput, 
+        handleEqual, 
+        handleKeyDown,
+        clearHistory
+    } = useCalculator();
 
-  useEffect(() => {
-    const handleKey = (e) => {
-      e.preventDefault(); 
-      handleKeyDown(e.key);
+    // Only apply keyboard shortcuts in calculator modes
+    useEffect(() => {
+        if (mode === 'GRAPH') return;
+        
+        const handleKey = (e) => {
+            e.preventDefault(); 
+            handleKeyDown(e.key);
+        };
+
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [handleKeyDown, mode]);
+
+    const handleButtonClick = (label) => {
+        if (label === '=') {
+            handleEqual();
+        } else {
+            handleInput(label);
+        }
     };
 
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [handleKeyDown]);
+    const shakeAnimation = isError ? {
+        animate: 'shake',
+        variants: { shake: { x: [0, -10, 10, -10, 10, 0], transition: { duration: 0.5 } } }
+    } : {};
 
-  const handleButtonClick = (label) => {
-    if (label === '=') {
-      handleEqual();
-    } else {
-      handleInput(label);
-    }
-  };
+    // Determine content based on mode
+    const renderContent = () => {
+        if (mode === 'GRAPH') {
+            return <GraphMode />;
+        }
 
-  const toggleMode = () => {
-    setIsScientificMode(prev => !prev);
-  };
+        const currentButtons = mode === 'SCIENTIFIC' ? scientificButtons : basicButtons;
+        
+        return (
+            <>
+                <div className={`mb-4 p-2 rounded-xl border-4 ${isError ? 'border-accent-red' : 'border-accent-blue/30'}
+                                bg-display-bg shadow-inner-shadow transition-all duration-300`}>
+                    <div className='h-8 text-right text-accent-blue/70 px-2 text-sm font-mono'>
+                        {error || ''}
+                    </div>
+                    <div className={`w-full text-right p-4 overflow-x-auto whitespace-nowrap font-mono 
+                                ${isError ? 'text-accent-red text-3xl font-bold' : 'text-white text-5xl'}`}>
+                        {input}
+                    </div>
+                </div>
 
-  const shakeAnimation = isError ? {
-    animate: 'shake',
-    variants: { shake: { x: [0, -10, 10, -10, 10, 0], transition: { duration: 0.5 } } }
-  } : {};
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={mode}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.2 }}
+                        className="grid grid-cols-4 gap-3 md:gap-4"
+                    >
+                        {currentButtons.map((btn) => (
+                            <CalculatorButton
+                                key={btn.label}
+                                label={btn.label}
+                                onClick={handleButtonClick}
+                                className={btn.style}
+                                Icon={btn.icon}
+                            />
+                        ))}
+                    </motion.div>
+                </AnimatePresence>
+            </>
+        );
+    };
 
-  // FIX: Dynamic width adjustment based on mode
-  const containerWidthClass = isScientificMode ? 'max-w-md' : 'max-w-sm';
-
-  return (
-    // FIX: Main layout container ensures centering and side-by-side layout on large screens.
-    <div className="flex flex-col lg:flex-row lg:gap-8 w-full max-w-6xl items-start justify-center">
-
-        {/* Calculator Main Body - The central item */}
-        <motion.div
-          {...shakeAnimation} 
-          className={`w-full ${containerWidthClass} p-5 rounded-3xl backdrop-blur-xl 
-                      bg-secondary-dark/60 border border-glass-border 
-                      shadow-2xl shadow-accent-blue/20 
-                      transform transition-all duration-500 
-                      hover:shadow-soft-glow order-1 lg:order-1`} 
-        >
-            {/* Mode Toggle Button */}
-            <motion.button
-                onClick={toggleMode}
-                whileTap={{ scale: 0.9 }}
-                className='w-full p-2 mb-4 rounded-xl text-sm font-medium text-accent-blue bg-glass-bg/50 
-                           hover:bg-glass-bg transition-all duration-300 border border-glass-border'
-                aria-label={isScientificMode ? "Switch to Basic Mode" : "Switch to Scientific Mode"}
+    return (
+        <div className="flex flex-col lg:flex-row lg:gap-8 w-full max-w-6xl items-start justify-center">
+            <motion.div
+                {...(mode !== 'GRAPH' && shakeAnimation)}
+                className={`w-full p-5 rounded-3xl backdrop-blur-xl bg-secondary-dark/60 
+                           border border-glass-border shadow-2xl shadow-accent-blue/20 
+                           transform transition-all duration-500 hover:shadow-soft-glow 
+                           ${mode === 'GRAPH' ? 'max-w-7xl' : mode === 'SCIENTIFIC' ? 'max-w-md' : 'max-w-sm'}`}
             >
-                {isScientificMode ? (
-                    <span className='flex items-center justify-center'>
-                        <FiMinimize2 className="w-4 h-4 mr-2"/> Switch to BASIC Mode
-                    </span>
-                ) : (
-                    <span className='flex items-center justify-center'>
-                        <FiMaximize2 className="w-4 h-4 mr-2"/> Switch to SCIENTIFIC Mode
-                    </span>
-                )}
-            </motion.button>
-            
-            {/* Display Screen */}
-            <div className={`mb-4 p-2 rounded-xl border-4 border-accent-blue/30 
-                             bg-display-bg shadow-inner-shadow transition-all duration-300
-                             ${isError ? 'border-accent-red' : 'border-accent-blue/30'}`}
-            >
-              <div className='h-8 text-right text-accent-blue/70 px-2 text-sm font-mono'>
-                {error ? error : ''}
-              </div>
-              <TypingEffectDisplay 
-                text={input} 
-                isError={isError} 
-              />
-            </div>
+                <ModeSwitcher currentMode={mode} onModeChange={setMode} />
+                {renderContent()}
+            </motion.div>
 
-            {/* Buttons Grid - Animated Transition */}
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={isScientificMode ? 'scientific' : 'basic'}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.2 }}
-                    className={`grid ${currentGridCols} gap-3 md:gap-4`}
-                >
-                    {currentButtons.map((btn) => (
-                        <CalculatorButton
-                          key={btn.label}
-                          label={btn.label}
-                          onClick={handleButtonClick}
-                          className={btn.style}
-                          Icon={btn.icon}
-                        />
-                    ))}
-                </motion.div>
-            </AnimatePresence>
-        </motion.div>
-
-        {/* History Panel - Placed side-by-side on large screens, or above calculator on small screens */}
-        <div className='w-full lg:w-auto order-2 lg:order-2'>
-            <HistoryPanel history={history} clearHistory={clearHistory} />
+            {mode !== 'GRAPH' && (
+                <div className='w-full lg:w-auto'>
+                    <HistoryPanel history={history} clearHistory={clearHistory} />
+                </div>
+            )}
         </div>
-    </div>
-  );
+    );
 };
 
 export default Calculator;
